@@ -18,9 +18,9 @@ def add_post(request):
     # context = {
     #     'post': Post.objects.get()
     # }
-    if request == 'GET':
+    if request.method == 'GET':
         return render(request, 'post/add_post.html', context={})
-    if request == 'POST':
+    if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
             p = Post(title=form.cleaned_data['title'], content='')
