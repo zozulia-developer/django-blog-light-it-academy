@@ -1,0 +1,26 @@
+[
+{
+    "model": "posts.category",
+    "pk": 1,
+    "fields": {
+        "name": "Travels",
+        "is_active": true
+    }
+},
+{
+    "model": "posts.category",
+    "pk": 2,
+    "fields": {
+        "name": "Random",
+        "is_active": true
+    }
+},
+{
+    "model": "posts.category",
+    "pk": 3,
+    "fields": {
+        "name": "Test",
+        "is_active": true
+    }
+}
+]

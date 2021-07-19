@@ -4,13 +4,6 @@ from django.db import models
 class Post(models.Model):
     title = models.CharField(max_length=100, unique=True)
     content = models.TextField()
-    category = models.ForeignKey(
-        'Category',
-        on_delete=models.CASCADE,
-        null=True,
-        default=None,
-        related_name='posts'
-    )
     categories = models.ManyToManyField(
         'Category',
         through='PostCategory'
@@ -36,7 +29,8 @@ class Category(models.Model):
 class PostCategory(models.Model):
     post = models.ForeignKey(
         'Post',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='post_categories'
     )
     category = models.ForeignKey(
         'Category',
