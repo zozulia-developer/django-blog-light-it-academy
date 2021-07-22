@@ -12,10 +12,10 @@ class PostListView(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        return Post.objects.prefetch_related(
-            'post_categories',
-            'post_categories__category'
-        )
+        # return Post.objects.prefetch_related(
+        #     'post_categories__category'
+        # )
+        return Post.objects.published()
 
 
 class PostDetailView(DetailView):
@@ -25,10 +25,11 @@ class PostDetailView(DetailView):
 
 
 class PostCreateView(CreateView):
-    model = Post
+    # model = Post
     template_name = 'post/add_post.html'
-    context_object_name = 'post'
-    fields = ['title', 'content']
+    form_class = PostForm
+    # context_object_name = 'post'
+    # fields = ['title', 'content']
 
 
 class MyView(View):
@@ -79,7 +80,7 @@ def add_post(request):
 
 def edit_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    form = PostForm(initial={'title': post.title, 'content': post.content})
+    form = PostForm(initial={'title': post.title, 'content': post.content, 'status': post.status})
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():

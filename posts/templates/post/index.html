@@ -11,6 +11,7 @@
                 {{c.name}}
             {% endfor %}
         </strong>
+        <h5 class="mb-0 text-muted">{{post.get_status_display}}</h5>
         <h3 class="mb-0">{{post.title}}</h3>
         <div class="mb-1 text-muted">{{post.created_at}}</div>
         <p class="card-text mb-auto">{{post.content}}</p>
