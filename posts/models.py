@@ -53,6 +53,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_tags_list(self):
+        return [t.tag.name for t in self.tags.all().order_by('-tag__name')]
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
