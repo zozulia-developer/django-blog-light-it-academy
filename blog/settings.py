@@ -40,7 +40,10 @@ INSTALLED_APPS = [
 
     'posts.apps.PostsConfig',
     'tags.apps.TagsConfig',
-    'debug_toolbar'
+    'debug_toolbar',
+
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -155,6 +158,18 @@ LOGGING = {
         }
     }
 }
+
+CELERY_BROKER_URL = 'redis://localhost'
+CELERY_RESULT_BACKEND = 'django-db'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# CELERY_BEAT_SCHEDULE = {
+#     'add-every-5-sec': {
+#         'task': 'simple_tasks.report',
+#         'schedule': 5
+#     }
+# }
 
 try:
     from .settings_local import *
