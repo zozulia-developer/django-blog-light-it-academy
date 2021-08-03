@@ -43,6 +43,7 @@
         }
       }
 
+
     </style>
 
     <!-- Custom styles for this template -->
@@ -66,7 +67,11 @@
                         <path d="M21 21l-5.2-5.2"/>
                     </svg>
                 </a>
+                {% if user.is_authenticated %}
+                <span>Welcome, <b>{{ user.username }}</b>!</span>
+                {% else %}
                 <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                {% endif %}
             </div>
         </div>
     </header>

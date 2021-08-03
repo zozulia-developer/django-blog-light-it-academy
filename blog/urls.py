@@ -19,11 +19,13 @@ from django.urls import include, path
 from django.conf import settings
 
 from blog.views import redirect_blog
+from posts.views import login_view
 
 urlpatterns = [
     path('', redirect_blog, name='index'),
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
+    path('login/', login_view),
 ]
 
 if settings.DEBUG:

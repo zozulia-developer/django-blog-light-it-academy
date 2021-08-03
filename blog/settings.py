@@ -129,6 +129,14 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = 'assets'
 
+# AUTH_USER_MODEL = 'posts.Author'
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+LOGIN_URL = '/login/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

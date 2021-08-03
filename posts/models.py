@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.auth.models import User, AbstractUser
 
 from tags.models import TaggedItem
 
@@ -77,3 +78,11 @@ class PostCategory(models.Model):
     )
     is_main = models.BooleanField(default=False)
 
+
+class Author(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
+    posts = models.ManyToManyField(Post)
+
+
+class AuthorAbs(AbstractUser):
+    posts = models.ManyToManyField(Post)
