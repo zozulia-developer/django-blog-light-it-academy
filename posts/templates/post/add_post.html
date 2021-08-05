@@ -1,9 +1,12 @@
 {% extends 'post/base.html' %}
+{% load cache %}
 
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    {{form.as_p}}
+    {% cache 120 form %}
+        {{form.as_p}}
+    {% endcache %}
     {{form.errors}}
     <button class="btn btn-primary btn-lg btn-block">Add post</button>
 </form>

@@ -1,7 +1,16 @@
 {% extends 'post/base.html' %}
 
-{% block content %}
+{% load i18n %}
 
+{% block content %}
+<h1>{% translate 'Posts' %}</h1>
+<div>
+    {% language 'en' %}
+        {% blocktranslate with amount=posts.count %}
+            You have {{ amount }} posts.
+        {% endblocktranslate %}
+    {% endlanguage %}
+</div>
 {% for post in posts %}
 
 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">

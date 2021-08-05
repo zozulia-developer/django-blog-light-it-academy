@@ -5,6 +5,10 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
+from django.core.cache import caches, cache
+
+from django.utils.translation import gettext as _
 
 from .models import Post
 from .forms import PostForm, LoginForm
@@ -59,29 +63,38 @@ class MyView(View):
 
 
 @login_required(login_url='/login/')
+@cache_page(60, cache='db_cache')
 def index(request):
+    db_cache = caches['db_cache']
+    posts = db_cache.get('posts_list', [])
+    if not posts:
+        posts = Post.objects.all()
+        db_cache.set('posts_list', list(posts), 240)
+        print('!!!cached')
+
+    posts_title = _('Posts')
 
     context = {
-        'posts': Post.objects.all(),
+        'posts': posts,
+        'title': posts_title
     }
-
-    request.session['user_id'] = 111
-    request.session['user_data'] = {
-        'posts': 32
-    }
-    del request.session['user_id']
-
-    request.session['user_data']['posts'] = 22
-    request.session.modified = True
-
-    request.session.set_expiry(0)  # время жизни сессии
-    request.session.flush()  # удалить текущую сессию
-
-    from django.contrib.auth.models import User
-
-    user = User.objects.create_user('username', 'email@email.com', 'password')
-    user.set_password('new_password')
-    user.save()
+    # request.session['user_id'] = 111
+    # request.session['user_data'] = {
+    #     'posts': 32
+    # }
+    # del request.session['user_id']
+    #
+    # request.session['user_data']['posts'] = 22
+    # request.session.modified = True
+    #
+    # request.session.set_expiry(0)  # время жизни сессии
+    # request.session.flush()  # удалить текущую сессию
+    #
+    # from django.contrib.auth.models import User
+    #
+    # user = User.objects.create_user('username', 'email@email.com', 'password')
+    # user.set_password('new_password')
+    # user.save()
 
     return render(request, 'post/index.html', context)
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.auth.models import User, AbstractUser
+from django.utils.functional import cached_property
 
 from tags.models import TaggedItem
 
@@ -54,6 +55,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    @cached_property
     def get_tags_list(self):
         return [t.tag.name for t in self.tags.all().order_by('-tag__name')]
 
@@ -79,10 +81,10 @@ class PostCategory(models.Model):
     is_main = models.BooleanField(default=False)
 
 
-class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
-    posts = models.ManyToManyField(Post)
+# class Author(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
+#     posts = models.ManyToManyField(Post)
 
 
-class AuthorAbs(AbstractUser):
-    posts = models.ManyToManyField(Post)
+# class AuthorAbs(AbstractUser):
+#     posts = models.ManyToManyField(Post)
