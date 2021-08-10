@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'tags.apps.TagsConfig',
     'debug_toolbar',
+    'rest_framework',
+    'drf_yasg',
 
     'django_celery_results',
     'django_celery_beat',
@@ -204,6 +206,13 @@ CACHES = {
 }
 
 CACHE_MIDDLEWARE_SECONDS = 3600
+
+# REST config
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%d%m%Y %h:%m:%s'
+}
 
 try:
     from .settings_local import *
