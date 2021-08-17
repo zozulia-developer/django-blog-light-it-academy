@@ -24,7 +24,7 @@ class PostViewSet(mixins.RetrieveModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-class CategoryViewSet(generics.ListAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
